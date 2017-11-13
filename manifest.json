@@ -17,7 +17,7 @@
 
       "content_scripts": [
       {
-        "matches": ["https://plus.google.com/hangouts/*"],
+        "matches": ["https://plus.google.com/hangouts/*", "https://hangouts.google.com/*"],
         "js": ["jquery.js", "ptt.js"]
       }
       ]
