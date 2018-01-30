@@ -14,19 +14,24 @@ mousedown.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, 
 
 $(window).on({
 	keydown: function(e) {
-		if(e.which == pttkey && !down) {
-			down = true;
+		if(e.which == pttkey && ! $(e.target).is('textarea, input:text') && !down) {
+			
 			targetbutton = $('div[role="button"][aria-label="Unmute microphone"][aria-pressed="true"] div')[0];
-			targetbutton.dispatchEvent(mousedown);
-			targetbutton.dispatchEvent(mouseup);
+			if (targetbutton) {
+				down = true;
+				targetbutton.dispatchEvent(mousedown);
+				targetbutton.dispatchEvent(mouseup);
+			}
 		}
 	},
 	keyup: function(e) {
-		if(e.which == pttkey) {
+		if(e.which == pttkey && ! $(e.target).is('textarea, input:text')) {
 			down = false;
 			targetbutton = $('div[role="button"][aria-label="Mute microphone"][aria-pressed="false"] div')[0];
-			targetbutton.dispatchEvent(mousedown);
-			targetbutton.dispatchEvent(mouseup);
+			if (targetbutton) {
+				targetbutton.dispatchEvent(mousedown);
+				targetbutton.dispatchEvent(mouseup);
+			}
 		}
 	}
 });
