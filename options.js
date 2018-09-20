@@ -1,29 +1,28 @@
- enterkey = document.getElementById("enterkey");
+enterkey = document.getElementById("enterkey");
 
 function save_options() {
   var key = pressedkey;
   localStorage["ptt_key"] = key;
-  $('#status').html("Key saved.");
+  document.querySelector('#status').innerText = "Key saved.";
 }
 
 function restore_options() {
-  var savedkey = localStorage["ptt_key"];
-  if (!savedkey) {
-    return;
-  }
-  $(enterkey).val(savedkey);
+  chrome.extension.sendMessage({method: "getStatus"}, function(response) {
+	enterkey.value = response.status;
+  });
 }
 
 enterkey.addEventListener("keydown",function(e){
-  pressedkey = e.keyCode;
-  $(enterkey).val(e.keyIdentifier);
+  enterkey.value = pressedkey = e.key;
   e.preventDefault(); //Stop char entry showing
 }, false);
 
-$('#save').on("click", function(){
-  save_options();
-});
 
-$(document).ready(function() {
- restore_options();
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  document.querySelector('#save').addEventListener("click", function(){
+    save_options();
+  });
+
+  restore_options();
 });
