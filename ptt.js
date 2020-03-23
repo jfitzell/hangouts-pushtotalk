@@ -12,21 +12,29 @@ var mousedown = document.createEvent("MouseEvents");
 mouseup.initMouseEvent("mouseup", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
 mousedown.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
 
+function press(button) {
+  button.dispatchEvent(mousedown);
+	button.dispatchEvent(mouseup);
+	// Prevent space from now triggering a click on the button
+	button.blur();
+}
+
+function microphoneButton() {
+  target = document.querySelector('div[role="button"][data-is-muted]');
+	if (! target) {
+		console.log("PTT: Cannot find microphone button");
+	}
+	return target;
+}
+
 window.onkeydown = function(e) {
 	if(e.key == pttkey && ! e.target.matches('textarea, input[type="text"]') && !down) {
 		down = true;
-		var targetbutton;
 
-		targetbutton = document.querySelector('div[role="button"][data-is-muted="true"]');
-		if (! targetbutton) {
-			console.log("PTT: Cannot find unmute button");
-		}
+		var button = microphoneButton();
 
-		if (targetbutton) {
-			targetbutton.dispatchEvent(mousedown);
-			targetbutton.dispatchEvent(mouseup);
-			// Prevent space from now triggering a click on the button
-			targetbutton.blur();
+		if (button && button.dataset["isMuted"] == "true") {
+			press(button);
 		}
 	}
 };
@@ -34,18 +42,11 @@ window.onkeydown = function(e) {
 window.onkeyup = function(e) {
 	if(e.key == pttkey && ! e.target.matches('textarea, input[type="text"]')) {
 		down = false;
-		var targetbutton;
 
-		targetbutton = document.querySelector('div[role="button"][data-is-muted="false"]');
-		if (! targetbutton) {
-			console.log("PTT: Cannot find mute button");
-		}
+		var button = microphoneButton();
 
-		if (targetbutton) {
-			targetbutton.dispatchEvent(mousedown);
-			targetbutton.dispatchEvent(mouseup);
-			// Prevent space from now triggering a click on the button
-			targetbutton.blur();
+		if (button && button.dataset["isMuted"] == "false") {
+			press(button);
 		}
 	}
 };
