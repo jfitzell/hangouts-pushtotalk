@@ -28,7 +28,7 @@ function microphoneButton() {
 }
 
 window.onkeydown = function(e) {
-	if(e.key == pttkey && ! e.target.matches('textarea, input[type="text"]') && !down) {
+	if(e.key == pttkey && ! e.target.matches('textarea, input[type="text"], div[role="button"') && !down) {
 		down = true;
 
 		var button = microphoneButton();
@@ -40,7 +40,7 @@ window.onkeydown = function(e) {
 };
 
 window.onkeyup = function(e) {
-	if(e.key == pttkey && ! e.target.matches('textarea, input[type="text"]')) {
+	if(e.key == pttkey && ! e.target.matches('textarea, input[type="text"], div[role="button"')) {
 		down = false;
 
 		var button = microphoneButton();
