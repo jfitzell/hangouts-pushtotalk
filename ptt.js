@@ -3,7 +3,7 @@ var down;
 
 chrome.extension.sendMessage({method: "getStatus"}, function(response) {
 	pttkey = response.status;
-	console.log("Push to talk loaded with key: " + response.status);
+	console.log("Push to talk loaded with key: '" + response.status + "'");
 });
 
 var mouseup = document.createEvent("MouseEvents");
@@ -17,11 +17,9 @@ window.onkeydown = function(e) {
 		down = true;
 		var targetbutton;
 
-		// Hangouts
-		targetbutton = document.querySelector('div[role="button"][aria-label="Unmute microphone"][aria-pressed="true"] div');
-		// Meet
+		targetbutton = document.querySelector('div[role="button"][data-is-muted="true"]');
 		if (! targetbutton) {
-			targetbutton = document.querySelector('div[role="button"][aria-label="Turn on microphone"][data-is-muted="true"]');
+			console.log("PTT: Cannot find unmute button");
 		}
 
 		if (targetbutton) {
@@ -38,11 +36,9 @@ window.onkeyup = function(e) {
 		down = false;
 		var targetbutton;
 
-		// Hangouts
-		targetbutton = document.querySelector('div[role="button"][aria-label="Mute microphone"][aria-pressed="false"] div');
-		// Meet
+		targetbutton = document.querySelector('div[role="button"][data-is-muted="false"]');
 		if (! targetbutton) {
-			targetbutton = document.querySelector('div[role="button"][aria-label="Turn off microphone"][data-is-muted="false"]');
+			console.log("PTT: Cannot find mute button");
 		}
 
 		if (targetbutton) {

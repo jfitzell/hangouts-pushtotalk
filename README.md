@@ -1,7 +1,7 @@
-Google+ Hangouts - Push to Talk
+Google Meet - Push to Talk
 ===
 
-Google+ Hangouts annoyingly does not feature push to talk, and so this addon aims to add that functionality when in a call.
+Google Meet annoyingly does not feature push to talk, and so this addon aims to add that functionality when in a call.
 
 Install instructions
 ---
